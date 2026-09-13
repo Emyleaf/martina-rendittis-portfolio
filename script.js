@@ -1,15 +1,16 @@
-// Per aggiornare il portfolio, sostituisci gli elementi di queste liste con i nuovi video.
-// Il player TikTok usa l'ID numerico del post; Instagram usa il codice del Reel.
+// Sostituisci qui titoli, anteprime e link quando arrivano nuovi video.
 const videoDiEsempio = {
   tiktok: {
+    titolo: "Questo posto mi ha rubato il cuore",
     piattaforma: "TikTok",
-    titolo: "Un aperitivo in Toscana",
+    anteprima: "./img/food-tiktok-preview.jpg",
     url: "https://www.tiktok.com/@looksbymarti/video/7656032266816195873",
     embed: "https://www.tiktok.com/player/v1/7656032266816195873",
   },
   instagram: {
+    titolo: "DIVA BITES ep. 7",
     piattaforma: "Instagram",
-    titolo: "Diva Bites, episodio 7",
+    anteprima: "./img/food-instagram-preview.jpg",
     url: "https://www.instagram.com/reel/Dca1XLMsdaM/",
     embed: "https://www.instagram.com/reel/Dca1XLMsdaM/embed/",
   },
@@ -26,6 +27,7 @@ const raccolte = {
   beauty: [],
 };
 
+const email = "looksbymarti@gmail.com";
 const numeroSpaziBeauty = 5;
 const views = {
   home: document.getElementById("home-view"),
@@ -36,8 +38,14 @@ const galleries = {
   food: document.getElementById("food-gallery"),
   beauty: document.getElementById("beauty-gallery"),
 };
-const baseUrl = `${window.location.pathname}${window.location.search}`;
+const dialog = document.getElementById("video-dialog");
+const dialogTitle = document.getElementById("video-dialog-title");
+const dialogPlayer = document.getElementById("video-dialog-player");
+const dialogOriginal = document.getElementById("video-dialog-original");
+const copyFeedback = document.querySelector("[data-copy-feedback]");
+const baseUrl = window.location.pathname + window.location.search;
 let activeView = null;
+let feedbackTimer;
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -46,64 +54,64 @@ function element(tag, className, text) {
   return node;
 }
 
-function videoCard(video, index) {
-  const card = element("article", "video-card");
-  const heading = element("div", "video-card__heading");
-  const headingCopy = element("div");
-  headingCopy.append(
-    element("p", "", `${video.piattaforma} · Video ${String(index + 1).padStart(2, "0")}`),
-    element("h4", "", video.titolo),
-  );
-  heading.append(headingCopy, element("span", "video-card__number", String(index + 1).padStart(2, "0")));
+function openVideo(video) {
+  dialogTitle.textContent = video.titolo;
+  dialogOriginal.href = video.url;
+  dialogOriginal.textContent = "Apri su " + video.piattaforma + " →";
 
-  const player = element("div", "video-card__player");
+  dialog.showModal();
+  document.body.classList.add("dialog-open");
+
   const frame = element("iframe");
-  frame.src = video.embed;
-  frame.title = `${video.titolo} su ${video.piattaforma}`;
-  frame.loading = "lazy";
-  frame.referrerPolicy = "strict-origin-when-cross-origin";
+  frame.title = video.titolo + " su " + video.piattaforma;
   frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
   frame.allowFullscreen = true;
-  player.append(frame);
+  frame.referrerPolicy = "strict-origin-when-cross-origin";
+  dialogPlayer.replaceChildren(frame);
+  frame.src = video.embed;
+  dialog.querySelector("[data-close-video]").focus();
+}
 
-  const footer = element("div", "video-card__footer");
-  const link = element("a", "", "Apri il video ↗");
-  link.href = video.url;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  link.setAttribute("aria-label", `Apri ${video.titolo} su ${video.piattaforma} in una nuova scheda`);
-  footer.append(element("span", "", `Su ${video.piattaforma}`), link);
+function closeVideo() {
+  if (dialog.open) dialog.close();
+}
 
-  card.append(heading, player, footer);
+function videoCard(video) {
+  const card = element("button", "video-banner");
+  card.type = "button";
+  card.setAttribute("aria-label", "Guarda " + video.titolo + " a schermo intero");
+
+  const image = element("img", "video-banner__image");
+  image.src = video.anteprima;
+  image.alt = "";
+  image.loading = "lazy";
+
+  card.append(
+    image,
+    element("span", "video-banner__label", video.titolo),
+    element("span", "video-banner__play"),
+  );
+  card.addEventListener("click", () => openVideo(video));
   return card;
 }
 
-function placeholderCard(index) {
-  const card = element("article", "placeholder-card");
-  const top = element("div", "placeholder-card__top");
-  top.append(
-    element("span", "", `Beauty · ${String(index + 1).padStart(2, "0")}`),
-    element("span", "placeholder-card__ornament", "✦"),
+function placeholderCard() {
+  const card = element("article", "video-banner video-banner--placeholder");
+  card.append(
+    element("span", "video-banner__label", "Beauty"),
+    element("span", "video-banner__placeholder-text", "Video in arrivo"),
   );
-  const bottom = element("div", "placeholder-card__bottom");
-  bottom.append(
-    element("h4", "", "Il prossimo video è qui."),
-    element("p", "", "Spazio pronto per un contenuto beauty."),
-  );
-  card.append(top, bottom);
   return card;
 }
 
 function populateGallery(view) {
   const gallery = galleries[view];
   if (!gallery) return;
-
   const videos = raccolte[view];
   const cards = videos.length
     ? videos.map(videoCard)
-    : Array.from({ length: numeroSpaziBeauty }, (_, index) => placeholderCard(index));
+    : Array.from({ length: numeroSpaziBeauty }, placeholderCard);
   gallery.replaceChildren(...cards);
-  document.getElementById(`${view}-count`).textContent = String(cards.length).padStart(2, "0");
 }
 
 function viewFromHash() {
@@ -113,19 +121,20 @@ function viewFromHash() {
 
 function showView(view, focusHeading = false) {
   if (activeView === view) return;
+  closeVideo();
 
   for (const [name, section] of Object.entries(views)) {
     section.hidden = name !== view;
   }
   for (const [name, gallery] of Object.entries(galleries)) {
-    if (name !== view) gallery.replaceChildren(); // Ferma il video quando si esce dalla sezione.
+    if (name !== view) gallery.replaceChildren();
   }
   if (view !== "home") populateGallery(view);
 
   activeView = view;
   document.title = view === "home"
     ? "Martina Rendittis — Food & Beauty"
-    : `${view === "food" ? "Food" : "Beauty"} — Martina Rendittis`;
+    : (view === "food" ? "Food" : "Beauty") + " — Martina Rendittis";
   window.scrollTo(0, 0);
 
   if (focusHeading) {
@@ -136,7 +145,7 @@ function showView(view, focusHeading = false) {
 
 function openView(view) {
   if (!views[view] || view === "home") return;
-  window.history.pushState({ view, fromHome: true }, "", `${baseUrl}#${view}`);
+  window.history.pushState({ view, fromHome: true }, "", baseUrl + "#" + view);
   showView(view, true);
 }
 
@@ -149,11 +158,48 @@ function returnHome() {
   }
 }
 
+async function copyEmail() {
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(email);
+    copied = true;
+  } catch {
+    const helper = element("textarea");
+    helper.value = email;
+    helper.style.position = "fixed";
+    helper.style.opacity = "0";
+    document.body.append(helper);
+    try {
+      helper.select();
+      copied = document.execCommand("copy");
+    } catch {
+      copied = false;
+    } finally {
+      helper.remove();
+    }
+  }
+
+  copyFeedback.textContent = copied ? "Copiata!" : "Riprova";
+  clearTimeout(feedbackTimer);
+  feedbackTimer = setTimeout(() => {
+    copyFeedback.textContent = "Copia";
+  }, 2500);
+}
+
+document.querySelector("[data-copy-email]").addEventListener("click", copyEmail);
 document.querySelectorAll("[data-open]").forEach((button) => {
   button.addEventListener("click", () => openView(button.dataset.open));
 });
 document.querySelectorAll("[data-back]").forEach((button) => {
   button.addEventListener("click", returnHome);
+});
+document.querySelector("[data-close-video]").addEventListener("click", closeVideo);
+dialog.addEventListener("close", () => {
+  dialogPlayer.replaceChildren();
+  document.body.classList.remove("dialog-open");
+});
+dialog.addEventListener("click", (event) => {
+  if (event.target === dialog) closeVideo();
 });
 window.addEventListener("popstate", () => showView(viewFromHash(), true));
 window.addEventListener("hashchange", () => showView(viewFromHash(), true));

@@ -6,11 +6,12 @@ Sito pubblicato: [emyleaf.github.io/martina-rendittis-portfolio](https://emyleaf
 
 ## Contenuti attuali
 
-- Food: cinque riquadri con i due video forniti, ripetuti come esempi per provare lo scorrimento.
+- Food: cinque riquadri con le anteprime dei due video forniti, ripetuti come esempi. Un tocco apre il player a tutto schermo nella stessa pagina.
 - Beauty: cinque riquadri provvisori, pronti per i video futuri.
 - I pulsanti TikTok e Instagram aprono i profili `@looksbymarti`.
+- Il banner con `looksbymarti@gmail.com` copia l'indirizzo negli appunti.
 
-I video e gli spazi Beauty sono definiti all'inizio di `script.js`. Quando arriveranno nuovi link, si possono sostituire gli elementi delle liste `raccolte.food` e `raccolte.beauty`. I player sono incorporati dalle piattaforme originali: la riproduzione dipende dalla disponibilità pubblica dei post e dalle impostazioni del browser.
+I video e gli spazi Beauty sono definiti all'inizio di `script.js`. Quando arriveranno nuovi link, si possono sostituire gli elementi delle liste `raccolte.food` e `raccolte.beauty` e aggiungere le relative immagini di anteprima in `img/`. I player sono incorporati dalle piattaforme originali: la riproduzione dipende dalla disponibilità pubblica dei post e dalle impostazioni del browser.
 
 ## Pubblicazione su GitHub Pages
 
