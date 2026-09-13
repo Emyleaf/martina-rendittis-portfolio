@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Il portfolio video di Martina Rendittis: food, beauty e piccoli momenti da condividere."
+    />
+    <meta name="theme-color" content="#f5e3db" />
+    <title>Martina Rendittis — Food & Beauty</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-backdrop">
+      <main class="portfolio" id="portfolio">
+        <section class="view home-view" id="home-view" aria-labelledby="home-title">
+          <div class="hero-photo">
+            <img
+              src="./img/banner_primapagina.jfif"
+              alt="Martina seduta all'aperto durante un tramonto in campagna"
+              fetchpriority="high"
+            />
+            <div class="hero-photo__top" aria-hidden="true">
+              <span>MR.</span>
+              <span>PORTFOLIO / 2026</span>
+            </div>
+            <div class="hero-photo__note">
+              <span class="hero-photo__sparkle" aria-hidden="true">✦</span>
+              <span>Storie da vedere,<br />sapori da vivere.</span>
+            </div>
+          </div>
+
+          <div class="home-content">
+            <p class="eyebrow">Food · Beauty · Video</p>
+            <h1 id="home-title" tabindex="-1">Martina <em>Rendittis</em></h1>
+            <p class="home-intro">
+              Racconto posti da scoprire, sapori da ricordare e dettagli beauty
+              che mi ispirano. Qui trovi i miei video, tutti in un posto.
+            </p>
+            <div class="category-actions" aria-label="Scegli una sezione">
+              <button class="category-button" type="button" data-open="food">
+                <span>Food</span>
+                <span class="category-button__arrow" aria-hidden="true">↗</span>
+              </button>
+              <button class="category-button" type="button" data-open="beauty">
+                <span>Beauty</span>
+                <span class="category-button__arrow" aria-hidden="true">↗</span>
+              </button>
+            </div>
+            <p class="home-content__footer">Un piccolo mondo, due grandi passioni.</p>
+          </div>
+        </section>
+
+        <section class="view collection-view" id="food-view" aria-labelledby="food-title" hidden>
+          <header class="collection-toolbar">
+            <button class="back-button" type="button" data-back aria-label="Torna alla pagina iniziale">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m13.5 5-7 7 7 7M7 12h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <span class="collection-toolbar__name">Martina Rendittis</span>
+            <span class="collection-toolbar__mark" aria-hidden="true">MR.</span>
+          </header>
+
+          <div class="collection-banner collection-banner--food">
+            <img src="./img/banner_primapagina.jfif" alt="" loading="lazy" />
+            <div class="collection-banner__copy">
+              <span class="collection-banner__eyebrow">01 / I MIEI VIDEO</span>
+              <h2 id="food-title" tabindex="-1">Food<span class="title-dot">.</span></h2>
+              <p>Luoghi da scoprire e sapori da ricordare.</p>
+            </div>
+          </div>
+
+          <nav class="social-links" aria-label="Profili social di Martina">
+            <a href="https://www.tiktok.com/@looksbymarti" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo TikTok di Martina in una nuova scheda">
+              <span class="social-links__icon social-links__icon--tiktok" aria-hidden="true">♪</span>
+              <span><strong>TikTok</strong><small>@looksbymarti</small></span>
+              <span class="social-links__external" aria-hidden="true">↗</span>
+            </a>
+            <a href="https://www.instagram.com/looksbymarti/" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo Instagram di Martina in una nuova scheda">
+              <svg class="social-links__icon social-links__icon--instagram" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2" />
+                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
+                <circle cx="17.5" cy="6.7" r="1.2" fill="currentColor" />
+              </svg>
+              <span><strong>Instagram</strong><small>@looksbymarti</small></span>
+              <span class="social-links__external" aria-hidden="true">↗</span>
+            </a>
+          </nav>
+
+          <div class="gallery-heading">
+            <div>
+              <p class="eyebrow">La mia selezione</p>
+              <h3>Video da guardare</h3>
+            </div>
+            <span class="gallery-heading__count" id="food-count">05</span>
+          </div>
+          <div class="video-gallery" id="food-gallery"></div>
+          <p class="collection-end">Hai visto tutto, per ora <span aria-hidden="true">✦</span></p>
+        </section>
+
+        <section class="view collection-view" id="beauty-view" aria-labelledby="beauty-title" hidden>
+          <header class="collection-toolbar">
+            <button class="back-button" type="button" data-back aria-label="Torna alla pagina iniziale">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m13.5 5-7 7 7 7M7 12h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <span class="collection-toolbar__name">Martina Rendittis</span>
+            <span class="collection-toolbar__mark" aria-hidden="true">MR.</span>
+          </header>
+
+          <div class="collection-banner collection-banner--beauty">
+            <img src="./img/banner_primapagina.jfif" alt="" loading="lazy" />
+            <div class="collection-banner__copy">
+              <span class="collection-banner__eyebrow">02 / I MIEI VIDEO</span>
+              <h2 id="beauty-title" tabindex="-1">Beauty<span class="title-dot">.</span></h2>
+              <p>Piccoli dettagli, grandi ispirazioni.</p>
+            </div>
+          </div>
+
+          <nav class="social-links" aria-label="Profili social di Martina">
+            <a href="https://www.tiktok.com/@looksbymarti" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo TikTok di Martina in una nuova scheda">
+              <span class="social-links__icon social-links__icon--tiktok" aria-hidden="true">♪</span>
+              <span><strong>TikTok</strong><small>@looksbymarti</small></span>
+              <span class="social-links__external" aria-hidden="true">↗</span>
+            </a>
+            <a href="https://www.instagram.com/looksbymarti/" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo Instagram di Martina in una nuova scheda">
+              <svg class="social-links__icon social-links__icon--instagram" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2" />
+                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
+                <circle cx="17.5" cy="6.7" r="1.2" fill="currentColor" />
+              </svg>
+              <span><strong>Instagram</strong><small>@looksbymarti</small></span>
+              <span class="social-links__external" aria-hidden="true">↗</span>
+            </a>
+          </nav>
+
+          <div class="gallery-heading">
+            <div>
+              <p class="eyebrow">La mia selezione</p>
+              <h3>Video da guardare</h3>
+            </div>
+            <span class="gallery-heading__count" id="beauty-count">00</span>
+          </div>
+          <div class="video-gallery" id="beauty-gallery"></div>
+          <p class="collection-end">Hai visto tutto, per ora <span aria-hidden="true">✦</span></p>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
