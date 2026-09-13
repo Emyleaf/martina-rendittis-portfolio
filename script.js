@@ -1,34 +1,81 @@
-// Sostituisci qui titoli, anteprime e link quando arrivano nuovi video.
-const videoDiEsempio = {
-  tiktok: {
-    titolo: "Questo posto mi ha rubato il cuore",
-    piattaforma: "TikTok",
-    anteprima: "./img/food-tiktok-preview.jpg",
-    url: "https://www.tiktok.com/@looksbymarti/video/7656032266816195873",
-    embed: "https://www.tiktok.com/player/v1/7656032266816195873",
-  },
-  instagram: {
-    titolo: "DIVA BITES ep. 7",
-    piattaforma: "Instagram",
-    anteprima: "./img/food-instagram-preview.jpg",
-    url: "https://www.instagram.com/reel/Dca1XLMsdaM/",
-    embed: "https://www.instagram.com/reel/Dca1XLMsdaM/embed/",
-  },
-};
-
 const raccolte = {
   food: [
-    videoDiEsempio.tiktok,
-    videoDiEsempio.instagram,
-    videoDiEsempio.tiktok,
-    videoDiEsempio.instagram,
-    videoDiEsempio.tiktok,
+    {
+      titolo: "Questo posto mi ha rubato il cuore",
+      piattaforma: "TikTok",
+      anteprima: "./img/food-tiktok-preview.jpg",
+      url: "https://www.tiktok.com/@looksbymarti/video/7656032266816195873",
+      embed: "https://www.tiktok.com/player/v1/7656032266816195873",
+    },
+    {
+      titolo: "DIVA BITES ep. 7",
+      piattaforma: "Instagram",
+      anteprima: "./img/food-instagram-preview.jpg",
+      url: "https://www.instagram.com/reel/Dca1XLMsdaM/",
+      embed: "https://www.instagram.com/reel/Dca1XLMsdaM/embed/",
+    },
+    {
+      titolo: "DIVA BITES ep. 10",
+      piattaforma: "TikTok",
+      anteprima: "./img/food-morelli.jpg",
+      url: "https://vm.tiktok.com/ZGdQSXYrd/",
+      embed: "https://www.tiktok.com/player/v1/7683946331974487328",
+    },
+    {
+      titolo: "Breakfast in my city",
+      piattaforma: "TikTok",
+      anteprima: "./img/food-latte-co.jpg",
+      url: "https://vm.tiktok.com/ZGdQSshfH/",
+      embed: "https://www.tiktok.com/player/v1/7682725197207588129",
+    },
+    {
+      titolo: "DIVA BITES ep. 9",
+      piattaforma: "TikTok",
+      anteprima: "./img/food-bottega-dani.jpg",
+      url: "https://vm.tiktok.com/ZGdQSwXcU/",
+      embed: "https://www.tiktok.com/player/v1/7681623617414679840",
+    },
   ],
-  beauty: [],
+  beauty: [
+    {
+      titolo: "Colorgram da OVS",
+      piattaforma: "TikTok",
+      anteprima: "./img/beauty-colorgram.jpg",
+      url: "https://vm.tiktok.com/ZGdQSEhxB/",
+      embed: "https://www.tiktok.com/player/v1/7684198669683264801",
+    },
+    {
+      titolo: "Spume doccia Biovène",
+      piattaforma: "TikTok",
+      anteprima: "./img/beauty-biovene.jpg",
+      url: "https://vm.tiktok.com/ZGdQSEpWL/",
+      embed: "https://www.tiktok.com/player/v1/7682459883504962849",
+    },
+    {
+      titolo: "Acqua & Sapone",
+      piattaforma: "TikTok",
+      anteprima: "./img/beauty-acqua-sapone.jpg",
+      url: "https://vm.tiktok.com/ZGdQS3YKc/",
+      embed: "https://www.tiktok.com/player/v1/7679754148098690336",
+    },
+    {
+      titolo: "Routine Medicube",
+      piattaforma: "TikTok",
+      anteprima: "./img/beauty-medicube.jpg",
+      url: "https://vm.tiktok.com/ZGdQS4h88/",
+      embed: "https://www.tiktok.com/player/v1/7671225744617491745",
+    },
+    {
+      titolo: "Giretto da dm",
+      piattaforma: "TikTok",
+      anteprima: "./img/beauty-dm.jpg",
+      url: "https://vm.tiktok.com/ZGdQSEjws/",
+      embed: "https://www.tiktok.com/player/v1/7678767993505074465",
+    },
+  ],
 };
 
 const email = "looksbymarti@gmail.com";
-const numeroSpaziBeauty = 5;
 const views = {
   home: document.getElementById("home-view"),
   food: document.getElementById("food-view"),
@@ -95,23 +142,11 @@ function videoCard(video) {
   return card;
 }
 
-function placeholderCard() {
-  const card = element("article", "video-banner video-banner--placeholder");
-  card.append(
-    element("span", "video-banner__label", "Beauty"),
-    element("span", "video-banner__placeholder-text", "Video in arrivo"),
-  );
-  return card;
-}
-
 function populateGallery(view) {
   const gallery = galleries[view];
   if (!gallery) return;
   const videos = raccolte[view];
-  const cards = videos.length
-    ? videos.map(videoCard)
-    : Array.from({ length: numeroSpaziBeauty }, placeholderCard);
-  gallery.replaceChildren(...cards);
+  gallery.replaceChildren(...videos.map(videoCard));
 }
 
 function viewFromHash() {

@@ -104,7 +104,6 @@ a:focus-visible {
   left: 20px;
   display: flex;
   max-width: calc(100% - 40px);
-  min-height: 47px;
   align-items: center;
   gap: 8px;
   padding: 8px 11px;
@@ -200,7 +199,6 @@ a:focus-visible {
   box-shadow: 0 9px 20px rgba(118, 33, 63, 0.16);
   color: white;
   cursor: pointer;
-  font-size: 14px;
   font-weight: 800;
   text-align: left;
   transition: transform 160ms ease, background 160ms ease;
@@ -228,7 +226,6 @@ a:focus-visible {
 
 .collection-toolbar {
   display: flex;
-  height: 103px;
   align-items: center;
   padding: 25px;
 }
@@ -270,7 +267,7 @@ a:focus-visible {
 }
 
 .collection-banner--beauty > img {
-  object-position: 50% 73%;
+  object-position: 50% 30%;
 }
 
 .collection-banner h2 {
@@ -302,7 +299,6 @@ a:focus-visible {
 .social-links a {
   display: flex;
   min-width: 0;
-  min-height: 70px;
   align-items: center;
   gap: 9px;
   padding: 10px;
@@ -329,7 +325,6 @@ a:focus-visible {
 }
 
 .social-links__icon--tiktok {
-  padding: 7px;
   border-radius: 10px;
   background: #171317;
 }
