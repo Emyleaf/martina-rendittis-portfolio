@@ -1,8 +1,8 @@
-# Portfolio di Martina Rendittis
+# Portfolio di Martina
 
 Sito statico, pensato prima di tutto per smartphone. La schermata iniziale e le sezioni Food e Beauty sono contenute nello stesso `index.html`: il passaggio tra sezioni non ricarica la pagina.
 
-Sito pubblicato: [emyleaf.github.io/martina-rendittis-portfolio](https://emyleaf.github.io/martina-rendittis-portfolio/).
+Sito pubblicato: [emyleaf.github.io/portfolio](https://emyleaf.github.io/portfolio/).
 
 ## Contenuti attuali
 

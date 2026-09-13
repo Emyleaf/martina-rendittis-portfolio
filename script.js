@@ -184,8 +184,8 @@ function showView(view, focusHeading = false) {
 
   activeView = view;
   document.title = view === "home"
-    ? "Martina Rendittis"
-    : (view === "food" ? "Food" : "Beauty") + " — Martina Rendittis";
+    ? "Martina"
+    : (view === "food" ? "Food" : "Beauty") + " — Martina";
   window.scrollTo(0, 0);
 
   if (focusHeading) {
