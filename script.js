@@ -92,6 +92,18 @@ const dialogOriginal = document.getElementById("video-dialog-original");
 const contactChip = document.querySelector("[data-copy-email]");
 const heroPhoto = document.querySelector(".hero-photo");
 const baseUrl = window.location.pathname + window.location.search;
+const cardObserver = "IntersectionObserver" in window &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ? new IntersectionObserver((entries, observer) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    }
+  }, { threshold: 0.08 })
+  : null;
+if (cardObserver) document.documentElement.classList.add("motion-ready");
 let activeView = null;
 
 function element(tag, className, text) {
@@ -147,6 +159,9 @@ function populateGallery(view) {
   if (!gallery) return;
   const videos = raccolte[view];
   gallery.replaceChildren(...videos.map(videoCard));
+  if (cardObserver) {
+    gallery.querySelectorAll(".video-banner").forEach((card) => cardObserver.observe(card));
+  }
 }
 
 function viewFromHash() {
@@ -157,6 +172,7 @@ function viewFromHash() {
 function showView(view, focusHeading = false) {
   if (activeView === view) return;
   closeVideo();
+  cardObserver?.disconnect();
 
   for (const [name, section] of Object.entries(views)) {
     section.hidden = name !== view;
