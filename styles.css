@@ -118,9 +118,11 @@ a:focus-visible {
   transition: transform 160ms ease, background 160ms ease;
 }
 
-.contact-chip:hover {
-  transform: translateY(-2px);
-  background: #fff;
+@media (hover: hover) and (pointer: fine) {
+  .contact-chip:hover {
+    transform: translateY(-2px);
+    background: #fff;
+  }
 }
 
 .contact-chip__mail {
