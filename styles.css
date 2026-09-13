@@ -137,13 +137,37 @@ a:focus-visible {
   white-space: nowrap;
 }
 
-.contact-chip__feedback {
-  align-self: center;
-  margin-left: 6px;
-  color: #986577;
-  font-size: 10px;
-  font-weight: 700;
+.copy-float {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: var(--wine);
+  color: white;
+  font-size: 14px;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  box-shadow: 0 4px 12px rgba(68, 22, 42, 0.25);
   white-space: nowrap;
+  animation: copy-float 1.8s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes copy-float {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.82);
+  }
+
+  14% {
+    opacity: 1;
+    transform: translate(-50%, -12px) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -78px) scale(1.04);
+  }
 }
 
 .home-content {
@@ -608,5 +632,11 @@ a:focus-visible {
   .social-links a,
   .video-banner {
     transition: none;
+  }
+
+  .copy-float {
+    animation: none;
+    opacity: 1;
+    transform: translate(-50%, -36px);
   }
 }

@@ -89,10 +89,10 @@ const dialog = document.getElementById("video-dialog");
 const dialogTitle = document.getElementById("video-dialog-title");
 const dialogPlayer = document.getElementById("video-dialog-player");
 const dialogOriginal = document.getElementById("video-dialog-original");
-const copyFeedback = document.querySelector("[data-copy-feedback]");
+const contactChip = document.querySelector("[data-copy-email]");
+const heroPhoto = document.querySelector(".hero-photo");
 const baseUrl = window.location.pathname + window.location.search;
 let activeView = null;
-let feedbackTimer;
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -193,7 +193,24 @@ function returnHome() {
   }
 }
 
-async function copyEmail() {
+function showCopyFeedback(text, trigger) {
+  const feedback = element("span", "copy-float", text);
+  const heroRect = heroPhoto.getBoundingClientRect();
+  const triggerRect = trigger.getBoundingClientRect();
+
+  feedback.setAttribute("role", "status");
+  feedback.setAttribute("aria-live", "polite");
+  feedback.style.left = `${triggerRect.left - heroRect.left + triggerRect.width / 2}px`;
+  feedback.style.top = `${triggerRect.top - heroRect.top - 8}px`;
+  heroPhoto.append(feedback);
+
+  const removeFeedback = () => feedback.remove();
+  feedback.addEventListener("animationend", removeFeedback, { once: true });
+  window.setTimeout(removeFeedback, 2200);
+}
+
+async function copyEmail(event) {
+  const trigger = event.currentTarget;
   let copied = false;
   try {
     await navigator.clipboard.writeText(email);
@@ -214,14 +231,10 @@ async function copyEmail() {
     }
   }
 
-  copyFeedback.textContent = copied ? "Copiata!" : "Riprova";
-  clearTimeout(feedbackTimer);
-  feedbackTimer = setTimeout(() => {
-    copyFeedback.textContent = "Copia";
-  }, 2500);
+  showCopyFeedback(copied ? "Copiato!" : "Impossibile copiare", trigger);
 }
 
-document.querySelector("[data-copy-email]").addEventListener("click", copyEmail);
+contactChip.addEventListener("click", copyEmail);
 document.querySelectorAll("[data-open]").forEach((button) => {
   button.addEventListener("click", () => openView(button.dataset.open));
 });
