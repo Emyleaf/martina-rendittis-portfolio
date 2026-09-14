@@ -92,6 +92,11 @@ const dialogOriginal = document.getElementById("video-dialog-original");
 const contactChip = document.querySelector("[data-copy-email]");
 const scrollCues = document.querySelectorAll(".scroll-cue");
 const heroPhoto = document.querySelector(".hero-photo");
+const portfolio = document.getElementById("portfolio");
+const viewContainer = document.querySelector(".view-container");
+const desktopGallery = window.matchMedia("(min-width: 1100px)");
+const tabletLayout = window.matchMedia("(min-width: 700px)");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const baseUrl = window.location.pathname + window.location.search;
 const cardObserver = "IntersectionObserver" in window &&
   !window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -171,8 +176,28 @@ function viewFromHash() {
 }
 
 function updateScrollCues() {
-  const scrolled = window.scrollY > 4;
-  scrollCues.forEach((cue) => { cue.hidden = scrolled; });
+  scrollCues.forEach((cue) => {
+    if (cue.closest(".view").hidden) return;
+
+    if (desktopGallery.matches) {
+      const gallery = document.getElementById(cue.dataset.scrollTo);
+      cue.hidden = gallery.scrollTop + gallery.clientHeight >= gallery.scrollHeight - 4;
+    } else if (tabletLayout.matches) {
+      cue.hidden = viewContainer.scrollTop + viewContainer.clientHeight >= viewContainer.scrollHeight - 4;
+    } else {
+      const lastCard = galleries[activeView]?.lastElementChild;
+      cue.hidden = !lastCard || lastCard.getBoundingClientRect().bottom <= window.innerHeight + 4;
+    }
+  });
+}
+
+function fitCollectionSummary() {
+  const section = views[activeView];
+  const intro = section?.querySelector(".food-intro, .beauty-intro");
+  if (!intro) return;
+
+  intro.style.removeProperty("font-size");
+
 }
 
 function showView(view, focusHeading = false) {
@@ -189,11 +214,16 @@ function showView(view, focusHeading = false) {
   if (view !== "home") populateGallery(view);
 
   activeView = view;
+  portfolio.classList.toggle("is-collection", view !== "home");
   document.title = view === "home"
     ? "Martina"
     : (view === "food" ? "Food" : "Beauty") + " - Martina";
   window.scrollTo(0, 0);
-  updateScrollCues();
+  viewContainer.scrollTop = 0;
+  requestAnimationFrame(() => {
+    fitCollectionSummary();
+    updateScrollCues();
+  });
 
   if (focusHeading) {
     const heading = views[view].querySelector("h1, h2");
@@ -267,7 +297,14 @@ document.querySelectorAll("[data-back]").forEach((button) => {
 document.querySelectorAll("[data-scroll-to]").forEach((button) => {
   button.addEventListener("click", () => {
     const gallery = document.getElementById(button.dataset.scrollTo);
-    gallery?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    const behavior = reducedMotion.matches ? "auto" : "smooth";
+    if (desktopGallery.matches) {
+      gallery?.scrollBy({ top: gallery.clientHeight * 0.75, behavior });
+    } else if (tabletLayout.matches) {
+      viewContainer.scrollBy({ top: viewContainer.clientHeight * 0.75, behavior });
+    } else {
+      window.scrollBy({ top: window.innerHeight * 0.75, behavior });
+    }
   });
 });
 document.querySelector("[data-close-video]").addEventListener("click", closeVideo);
@@ -281,6 +318,12 @@ dialog.addEventListener("click", (event) => {
 window.addEventListener("popstate", () => showView(viewFromHash(), true));
 window.addEventListener("hashchange", () => showView(viewFromHash(), true));
 window.addEventListener("scroll", updateScrollCues, { passive: true });
+viewContainer.addEventListener("scroll", updateScrollCues, { passive: true });
+Object.values(galleries).forEach((gallery) => gallery.addEventListener("scroll", updateScrollCues, { passive: true }));
+window.addEventListener("resize", () => {
+  fitCollectionSummary();
+  updateScrollCues();
+});
 
 const initialView = viewFromHash();
 window.history.replaceState({ view: initialView, fromHome: false }, "", window.location.href);

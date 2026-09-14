@@ -36,8 +36,7 @@
   <body>
     <div class="page-backdrop">
       <main class="portfolio" id="portfolio">
-        <section class="view home-view" id="home-view" aria-labelledby="home-title">
-          <div class="hero-photo">
+        <div class="hero-photo">
             <img
               src="./img/banner_primapagina.webp"
               alt="Martina seduta all'aperto durante un tramonto in campagna"
@@ -50,7 +49,20 @@
               </svg>
               <span class="contact-chip__text">looksbymarti@gmail.com</span>
             </button>
-          </div>
+            <nav class="hero-profiles" aria-label="Profili social di Martina">
+              <a href="https://www.instagram.com/looksbymarti/" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo Instagram di Martina in una nuova scheda">
+                <img src="./img/instagram-logo.png" alt="" />
+                <span><strong>Instagram</strong><small>@looksbymarti</small></span>
+              </a>
+              <a href="https://www.tiktok.com/@looksbymarti" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo TikTok di Martina in una nuova scheda">
+                <img src="./img/tiktok-logo.ico" alt="" />
+                <span><strong>TikTok</strong><small>@looksbymarti</small></span>
+              </a>
+            </nav>
+        </div>
+
+        <div class="view-container">
+        <section class="view home-view" id="home-view" aria-labelledby="home-title">
 
           <div class="home-content">
             <p class="home-name">Martina</p>
@@ -72,13 +84,14 @@
         </section>
 
         <section class="view collection-view" id="food-view" aria-labelledby="food-title" hidden>
+          <div class="collection-info">
           <header class="collection-toolbar">
             <button class="back-button" type="button" data-back aria-label="Torna alla pagina iniziale">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="m13.5 5-7 7 7 7M7 12h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>
-            <h1 class="collection-title" id="food-title">Food Content</h1>
+            <h1 class="collection-title" id="food-title" tabindex="-1">Food Content</h1>
           </header>
 
           <div class="collection-banner collection-banner--food">
@@ -99,21 +112,28 @@
           <p class="food-intro">
               <strong><em>Diva Bites</em></strong> è il mio format dedicato al <strong>food</strong>. Racconto ristoranti, locali e realtà enogastronomiche, soprattutto in <strong>Toscana</strong>.<br> Vado alla ricerca di realtà che mi colpiscono per la loro <strong>cucina</strong>, ma anche per il contesto in cui si trovano e l'<strong>atmosfera</strong> che riescono a trasmettere.
             </p>
+          </div>
 
+          <div class="collection-media">
           <button class="scroll-cue" type="button" data-scroll-to="food-gallery" aria-controls="food-gallery" aria-label="Scorri per vedere i video">
             <img class="scroll-cue__animation" src="./img/scroll-down.svg" alt="" width="36" height="36" />
           </button>
-          <div class="video-gallery" id="food-gallery"></div>
+          <div class="phone-mockup">
+            <img class="phone-mockup__frame" src="./img/iphoneboard.png" alt="" aria-hidden="true" />
+            <div class="video-gallery" id="food-gallery" tabindex="0" role="region" aria-label="Video food: scorri per vederne altri"></div>
+          </div>
+          </div>
         </section>
 
         <section class="view collection-view" id="beauty-view" aria-labelledby="beauty-title" hidden>
+          <div class="collection-info">
           <header class="collection-toolbar">
             <button class="back-button" type="button" data-back aria-label="Torna alla pagina iniziale">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="m13.5 5-7 7 7 7M7 12h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>
-            <h1 class="collection-title" id="beauty-title">Beauty &amp; Skincare Content</h1>
+            <h1 class="collection-title" id="beauty-title" tabindex="-1">Beauty &amp; Skincare Content</h1>
           </header>
 
           <div class="collection-banner collection-banner--beauty">
@@ -134,12 +154,19 @@
           <p class="beauty-intro">
             Mi piace aggiornare la mia community sulle novità del mondo <strong>Beauty</strong>, andando personalmente nei negozi a scoprire le tendenze del momento.<br> Realizzo contenuti dedicati alla <strong>Skincare</strong>, testando personalmente nuovi prodotti, con particolare attenzione alle esigenze delle <strong>pelli sensibili</strong> e al mondo della <strong>skincare coreana</strong>.
           </p>
+          </div>
 
+          <div class="collection-media">
           <button class="scroll-cue" type="button" data-scroll-to="beauty-gallery" aria-controls="beauty-gallery" aria-label="Scorri per vedere i video">
             <img class="scroll-cue__animation" src="./img/scroll-down.svg" alt="" width="36" height="36" />
           </button>
-          <div class="video-gallery" id="beauty-gallery"></div>
+          <div class="phone-mockup">
+            <img class="phone-mockup__frame" src="./img/iphoneboard.png" alt="" aria-hidden="true" />
+            <div class="video-gallery" id="beauty-gallery" tabindex="0" role="region" aria-label="Video beauty: scorri per vederne altri"></div>
+          </div>
+          </div>
         </section>
+        </div>
       </main>
     </div>
 
