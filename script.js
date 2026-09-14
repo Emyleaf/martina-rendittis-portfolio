@@ -238,6 +238,10 @@ function openView(view) {
 }
 
 function returnHome() {
+  if (desktopGallery.matches) {
+    galleries[activeView]?.scrollTo({ top: 0, behavior: "auto" });
+  }
+
   if (window.history.state?.fromHome) {
     window.history.back();
   } else {
