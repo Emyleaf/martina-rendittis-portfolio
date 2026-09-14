@@ -8,7 +8,7 @@ Sito pubblicato: [looksbymarti.github.io](https://looksbymarti.github.io/).
 
 - Food: cinque video. Un tocco sull'anteprima apre il player a tutto schermo nella stessa pagina.
 - Beauty: cinque video con lo stesso player.
-- Un invito animato sotto la presentazione di ogni sezione porta alla galleria dei video.
+- Una freccia animata in basso, visibile finché non si scorre, porta alla galleria dei video.
 - I pulsanti TikTok e Instagram aprono i profili `@looksbymarti`.
 - Il banner con `looksbymarti@gmail.com` copia l'indirizzo negli appunti.
 

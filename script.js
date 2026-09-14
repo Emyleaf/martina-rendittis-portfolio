@@ -90,6 +90,7 @@ const dialogTitle = document.getElementById("video-dialog-title");
 const dialogPlayer = document.getElementById("video-dialog-player");
 const dialogOriginal = document.getElementById("video-dialog-original");
 const contactChip = document.querySelector("[data-copy-email]");
+const scrollCues = document.querySelectorAll(".scroll-cue");
 const heroPhoto = document.querySelector(".hero-photo");
 const baseUrl = window.location.pathname + window.location.search;
 const cardObserver = "IntersectionObserver" in window &&
@@ -169,6 +170,11 @@ function viewFromHash() {
   return requested === "food" || requested === "beauty" ? requested : "home";
 }
 
+function updateScrollCues() {
+  const scrolled = window.scrollY > 4;
+  scrollCues.forEach((cue) => { cue.hidden = scrolled; });
+}
+
 function showView(view, focusHeading = false) {
   if (activeView === view) return;
   closeVideo();
@@ -187,6 +193,7 @@ function showView(view, focusHeading = false) {
     ? "Martina"
     : (view === "food" ? "Food" : "Beauty") + " - Martina";
   window.scrollTo(0, 0);
+  updateScrollCues();
 
   if (focusHeading) {
     const heading = views[view].querySelector("h1, h2");
@@ -273,6 +280,7 @@ dialog.addEventListener("click", (event) => {
 });
 window.addEventListener("popstate", () => showView(viewFromHash(), true));
 window.addEventListener("hashchange", () => showView(viewFromHash(), true));
+window.addEventListener("scroll", updateScrollCues, { passive: true });
 
 const initialView = viewFromHash();
 window.history.replaceState({ view: initialView, fromHome: false }, "", window.location.href);
