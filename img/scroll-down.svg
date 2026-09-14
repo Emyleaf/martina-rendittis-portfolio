@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-23 -25 46 50" role="img" aria-label="Scorri verso il basso">
+  <defs>
+    <path id="chevron" fill="#222" d="M19.607-10.516C18.436-11.688 16.536-11.688 15.365-10.516L.001 4.848-15.364-10.516C-16.536-11.688-18.436-11.688-19.607-10.516S-20.779-7.445-19.607-6.273L-2.637 10.697C-1.919 11.414-.928 11.688.001 11.526.929 11.688 1.919 11.414 2.635 10.697L19.607-6.273C20.779-7.445 20.779-9.345 19.607-10.516Z"/>
+  </defs>
+  <style>
+    .arrow{transform-origin:center;animation:fall 1.6s ease-in-out infinite}
+    .arrow--second{animation-delay:-.8s}
+    @keyframes fall{
+      0%{opacity:0;transform:translateY(-12px) scale(.7)}
+      33%{opacity:1;transform:translateY(-3px) scale(.8)}
+      67%{opacity:1;transform:translateY(9px) scale(.8)}
+      100%{opacity:0;transform:translateY(16px) scale(.7)}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .arrow{animation:none;opacity:1;transform:translateY(-7px) scale(.8)}
+      .arrow--second{opacity:.55;transform:translateY(13px) scale(.8)}
+    }
+  </style>
+  <use href="#chevron" class="arrow"/>
+  <use href="#chevron" class="arrow arrow--second"/>
+</svg>

@@ -257,6 +257,12 @@ document.querySelectorAll("[data-open]").forEach((button) => {
 document.querySelectorAll("[data-back]").forEach((button) => {
   button.addEventListener("click", returnHome);
 });
+document.querySelectorAll("[data-scroll-to]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const gallery = document.getElementById(button.dataset.scrollTo);
+    gallery?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  });
+});
 document.querySelector("[data-close-video]").addEventListener("click", closeVideo);
 dialog.addEventListener("close", () => {
   dialogPlayer.replaceChildren();
