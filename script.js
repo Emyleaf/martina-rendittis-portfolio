@@ -95,7 +95,7 @@ const heroPhoto = document.querySelector(".hero-photo");
 const portfolio = document.getElementById("portfolio");
 const viewContainer = document.querySelector(".view-container");
 const desktopGallery = window.matchMedia("(min-width: 1100px)");
-const tabletLayout = window.matchMedia("(min-width: 700px)");
+const tabletGallery = window.matchMedia("(min-width: 700px) and (max-width: 1099px)");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const baseUrl = window.location.pathname + window.location.search;
 const cardObserver = "IntersectionObserver" in window &&
@@ -179,11 +179,12 @@ function updateScrollCues() {
   scrollCues.forEach((cue) => {
     if (cue.closest(".view").hidden) return;
 
-    if (desktopGallery.matches) {
-      const gallery = document.getElementById(cue.dataset.scrollTo);
+    const gallery = document.getElementById(cue.dataset.scrollTo);
+
+    if (tabletGallery.matches) {
+      cue.hidden = gallery.scrollLeft + gallery.clientWidth >= gallery.scrollWidth - 4;
+    } else if (desktopGallery.matches) {
       cue.hidden = gallery.scrollTop + gallery.clientHeight >= gallery.scrollHeight - 4;
-    } else if (tabletLayout.matches) {
-      cue.hidden = viewContainer.scrollTop + viewContainer.clientHeight >= viewContainer.scrollHeight - 4;
     } else {
       const lastCard = galleries[activeView]?.lastElementChild;
       cue.hidden = !lastCard || lastCard.getBoundingClientRect().bottom <= window.innerHeight + 4;
@@ -238,7 +239,9 @@ function openView(view) {
 }
 
 function returnHome() {
-  if (desktopGallery.matches) {
+  if (tabletGallery.matches) {
+    galleries[activeView]?.scrollTo({ left: 0, behavior: "auto" });
+  } else if (desktopGallery.matches) {
     galleries[activeView]?.scrollTo({ top: 0, behavior: "auto" });
   }
 
@@ -302,10 +305,10 @@ document.querySelectorAll("[data-scroll-to]").forEach((button) => {
   button.addEventListener("click", () => {
     const gallery = document.getElementById(button.dataset.scrollTo);
     const behavior = reducedMotion.matches ? "auto" : "smooth";
-    if (desktopGallery.matches) {
+    if (tabletGallery.matches) {
+      gallery?.scrollBy({ left: gallery.clientWidth * 0.85, behavior });
+    } else if (desktopGallery.matches) {
       gallery?.scrollBy({ top: gallery.clientHeight * 0.75, behavior });
-    } else if (tabletLayout.matches) {
-      viewContainer.scrollBy({ top: viewContainer.clientHeight * 0.75, behavior });
     } else {
       window.scrollBy({ top: window.innerHeight * 0.75, behavior });
     }
@@ -321,7 +324,9 @@ dialog.addEventListener("click", (event) => {
 });
 window.addEventListener("popstate", () => showView(viewFromHash(), true));
 window.addEventListener("hashchange", () => showView(viewFromHash(), true));
-window.addEventListener("scroll", updateScrollCues, { passive: true });
+window.addEventListener("scroll", () => {
+  if (!tabletGallery.matches) updateScrollCues();
+}, { passive: true });
 viewContainer.addEventListener("scroll", updateScrollCues, { passive: true });
 Object.values(galleries).forEach((gallery) => gallery.addEventListener("scroll", updateScrollCues, { passive: true }));
 window.addEventListener("resize", () => {
