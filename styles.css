@@ -294,21 +294,27 @@ a:focus-visible {
 }
 
 .back-button {
-  display: grid;
-  width: 48px;
-  height: 48px;
-  place-items: center;
-  border: 1px solid #efdee2;
-  border-radius: 14px;
-  background: #fff9f8;
-  color: var(--wine);
+  display: flex;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 250, 248, 0.92);
   cursor: pointer;
   transition: background 160ms ease, transform 160ms ease;
 }
 
-.back-button svg {
-  width: 22px;
-  height: 22px;
+.back-button::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-top: 2.4px solid #68152d;
+  border-right: 2.4px solid #68152d;
+  transform: rotate(-135deg);
+  margin-left: -3px;
 }
 
 .collection-banner {
@@ -969,9 +975,9 @@ a:focus-visible {
   }
 
   .back-button {
-    width: 60px;
-    height: 60px;
-    flex: 0 0 60px;
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
   }
 
   .collection-banner {
@@ -1388,7 +1394,7 @@ a:focus-visible {
   .collection-info { min-width: 0; padding: 0; margin: 0; overflow: visible; }
   .collection-title { font-size: clamp(1.5rem, 2vw, 2rem); margin-left: 16px; }
   .collection-toolbar { padding-bottom: 20px; }
-  .back-button { width: 48px; height: 48px; flex-basis: 48px; }
+  .back-button { width: 38px; height: 38px; flex-basis: 38px; }
   .social-links { margin-top: -24px; }
   .social-links a { gap: 7px; padding: 8px; }
   .social-links__icon { width: 34px; height: 34px; flex-basis: 34px; }
@@ -1601,9 +1607,9 @@ a:focus-visible {
   }
 
   .back-button {
-    width: 56px;
-    height: 56px;
-    flex-basis: 56px;
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
   }
 
   .collection-banner {
