@@ -171,17 +171,18 @@ function animateVideoFlight(fromRect, toRect, imageSource, duration, closing = f
   return animation.finished.catch(() => {}).finally(() => flight.remove());
 }
 
-async function openVideo(video, trigger) {
+async function openVideo(video, trigger, manageFocus = false) {
   if (dialog.open) return;
   const transitionId = ++videoTransitionId;
   currentVideo = video;
   lastVideoTrigger = trigger;
-  restoreVideoFocus = true;
+  restoreVideoFocus = manageFocus;
   dialogTitle.textContent = video.titolo;
   dialogOriginal.href = video.url;
   dialogOriginalLabel.textContent = "Apri su " + video.piattaforma;
 
   dialog.showModal();
+  if (!manageFocus) dialog.querySelector("[data-close-video]").blur();
   document.body.classList.add("dialog-open");
   if (!reducedMotion.matches) dialog.classList.add("is-morphing");
 
@@ -202,10 +203,14 @@ async function openVideo(video, trigger) {
 
   if (transitionId !== videoTransitionId || !dialog.open) return;
   dialog.classList.remove("is-morphing");
-  dialog.querySelector("[data-close-video]").focus();
+  if (manageFocus) {
+    dialog.querySelector("[data-close-video]").focus();
+  } else {
+    dialog.querySelector("[data-close-video]").blur();
+  }
 }
 
-async function closeVideo({ immediate = false, restoreFocus = true } = {}) {
+async function closeVideo({ immediate = false, restoreFocus = restoreVideoFocus } = {}) {
   if (!dialog.open) return;
   if (dialog.classList.contains("is-closing") && !immediate) return;
 
@@ -245,7 +250,7 @@ function videoCard(video) {
     element("span", "video-banner__label", video.titolo),
     element("span", "video-banner__play"),
   );
-  card.addEventListener("click", () => openVideo(video, card));
+  card.addEventListener("click", (event) => openVideo(video, card, event.detail === 0));
   return card;
 }
 
@@ -428,7 +433,9 @@ document.querySelectorAll("[data-scroll-to]").forEach((button) => {
     }
   });
 });
-document.querySelector("[data-close-video]").addEventListener("click", () => closeVideo());
+document.querySelector("[data-close-video]").addEventListener("click", (event) => {
+  closeVideo({ restoreFocus: restoreVideoFocus && event.detail === 0 });
+});
 dialog.addEventListener("cancel", (event) => {
   event.preventDefault();
   closeVideo();
@@ -441,11 +448,14 @@ dialog.addEventListener("close", () => {
   currentVideo = null;
   if (restoreVideoFocus && lastVideoTrigger?.isConnected) {
     lastVideoTrigger.focus({ preventScroll: true });
+  } else {
+    lastVideoTrigger?.blur();
+    dialog.querySelector("[data-close-video]").blur();
   }
   lastVideoTrigger = null;
 });
 dialog.addEventListener("click", (event) => {
-  if (event.target === dialog) closeVideo();
+  if (event.target === dialog) closeVideo({ restoreFocus: false });
 });
 window.addEventListener("popstate", () => showView(viewFromHash(), true));
 window.addEventListener("hashchange", () => showView(viewFromHash(), true));

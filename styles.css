@@ -44,6 +44,15 @@ a:focus-visible {
   outline-offset: 3px;
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .video-banner:focus,
+  .video-banner:focus-visible,
+  .video-dialog__close:focus,
+  .video-dialog__close:focus-visible {
+    outline: none;
+  }
+}
+
 [tabindex="-1"]:focus {
   outline: none;
 }
