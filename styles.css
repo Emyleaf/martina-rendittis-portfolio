@@ -1446,6 +1446,7 @@ a:focus-visible {
     scrollbar-color: #d9bac5 #202020;
   }
   .phone-mockup .video-banner { flex: 0 0 auto; aspect-ratio: 1.3; height: auto; border-radius: 12px; }
+  .phone-mockup .video-banner__image {}
   .phone-mockup .video-banner__label {
     top: 6px;
     left: 6px;
@@ -2014,7 +2015,6 @@ a:focus-visible {
   }
 
   .mobile-home-brand__name {
-    font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(1.45rem, 7vw, 1.9rem);
     font-style: italic;
     letter-spacing: -0.045em;
@@ -2035,7 +2035,6 @@ a:focus-visible {
     place-items: center;
     border: 1px solid rgba(118, 33, 63, 0.2);
     border-radius: 50%;
-    font-family: Georgia, "Times New Roman", serif;
     font-size: 1.125rem;
     font-style: italic;
   }
@@ -2126,7 +2125,6 @@ a:focus-visible {
   }
 
   .home-name {
-    font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(0.875rem, 3.9vw, 1rem);
     font-weight: 700;
   }
@@ -2135,7 +2133,6 @@ a:focus-visible {
     max-width: none;
     margin: 2px 0 11px;
     color: var(--wine-deep);
-    font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(1.55rem, 7vw, 2rem);
     letter-spacing: -0.045em;
     line-height: 1.02;
@@ -2189,7 +2186,7 @@ a:focus-visible {
     transition: transform 220ms ease;
   }
 
-  .mobile-home-card:nth-child(1) > img {
+  .mobile-home-card > img[src="./img/food-castelvecchio.jpg"] {
     object-position: 50% 58%;
   }
 
@@ -2223,7 +2220,6 @@ a:focus-visible {
   }
 
   .mobile-home-card__content strong {
-    font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(1.16rem, 5vw, 1.45rem);
     letter-spacing: -0.035em;
     line-height: 0.98;
@@ -2264,7 +2260,7 @@ a:focus-visible {
     transform: scale(0.98);
   }
 
-  .mobile-home-card:active > img {
+  .mobile-home-card:active > img:not([src="./img/food-castelvecchio.jpg"]) {
     transform: scale(1.025);
   }
 
@@ -2393,4 +2389,9 @@ a:focus-visible {
     font-size: 0.75rem;
     line-height: 1.3;
   }
+}
+
+/* Permanent crop: keep outside media queries, even if the inline style is removed. */
+img[src="./img/food-castelvecchio.jpg"] {
+  scale: 110% !important;
 }

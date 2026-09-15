@@ -235,6 +235,10 @@ function videoCard(video) {
   image.src = video.anteprima;
   image.alt = "";
   image.loading = "lazy";
+  // Reapply the crop whenever the gallery recreates this thumbnail.
+  if (video.anteprima === "./img/food-castelvecchio.jpg") {
+    image.setAttribute("style", "scale: 110%;");
+  }
 
   card.append(
     image,
