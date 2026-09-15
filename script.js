@@ -38,7 +38,7 @@ const raccolte = {
   ],
   beauty: [
     {
-      titolo: "Cos De BAHA",
+      titolo: "Stylevana",
       piattaforma: "Instagram",
       anteprima: "./img/beauty-stylevana-spf.jpg",
       url: "https://www.instagram.com/reel/DcgH5r2MMHb/",
@@ -80,6 +80,8 @@ const views = {
   home: document.getElementById("home-view"),
   food: document.getElementById("food-view"),
   beauty: document.getElementById("beauty-view"),
+  about: document.getElementById("about-view"),
+  contact: document.getElementById("contact-view"),
 };
 const galleries = {
   food: document.getElementById("food-gallery"),
@@ -255,7 +257,7 @@ function populateGallery(view) {
 
 function viewFromHash() {
   const requested = window.location.hash.slice(1).toLowerCase();
-  return requested === "food" || requested === "beauty" ? requested : "home";
+  return ["food", "beauty", "about", "contact"].includes(requested) ? requested : "home";
 }
 
 function updateScrollCues() {
@@ -277,7 +279,7 @@ function updateScrollCues() {
 
 function fitCollectionSummary() {
   const section = views[activeView];
-  const intro = section?.querySelector(".food-intro, .beauty-intro");
+  const intro = section?.querySelector(".food-intro, .beauty-intro, .about-intro, .contact-intro");
   if (!intro) return;
 
   intro.style.removeProperty("font-size");
@@ -313,14 +315,19 @@ async function showView(view, focusHeading = false) {
   for (const [name, gallery] of Object.entries(galleries)) {
     if (name !== view) gallery.replaceChildren();
   }
-  if (view !== "home") populateGallery(view);
+  if (galleries[view]) populateGallery(view);
 
   activeView = view;
   pendingView = null;
   portfolio.classList.toggle("is-collection", view !== "home");
-  document.title = view === "home"
-    ? "Martina"
-    : (view === "food" ? "Food" : "Beauty") + " - Martina";
+  const viewTitles = {
+    home: "Martina",
+    food: "Food - Martina",
+    beauty: "Beauty - Martina",
+    about: "About me - Martina",
+    contact: "Lavoriamo insieme - Martina",
+  };
+  document.title = viewTitles[view];
   window.scrollTo(0, 0);
   viewContainer.scrollTop = 0;
   startViewEntry(views[view]);

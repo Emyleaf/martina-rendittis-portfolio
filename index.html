@@ -79,6 +79,7 @@
           <div class="home-content">
             <p class="home-name">Martina - 📍 Toscana, Italia </p>
             <h1 id="home-title" tabindex="-1">Lifestyle Content Creator</h1>
+            <p class="home-tagline"><em>Ciao sono Martina, una content creator appassionata di food, beauty e skincare!</em></p>
             <p class="home-intro">
               Mi piace fare video sin da quando ero piccola e li considero una sorta di <strong>diario digitale</strong>: un modo per custodire esperienze, scoperte e momenti e poterli rivivere nel tempo.<br><br> Oggi desidero trasformare questa passione in un percorso professionale, creando contenuti principalmente dedicati a <strong>food</strong>, <strong>beauty</strong> e <strong>skincare</strong>.
             </p>
@@ -92,6 +93,44 @@
                 <span class="category-button__arrow" aria-hidden="true">→</span>
               </button>
             </div>
+            <nav class="mobile-home-grid" aria-label="Esplora il portfolio">
+              <button class="mobile-home-card" type="button" data-open="food">
+                <img src="./img/food-castelvecchio.jpg" alt="" />
+                <span class="mobile-home-card__shade" aria-hidden="true"></span>
+                <span class="mobile-home-card__content">
+                  <strong>Food</strong>
+                  <small>Ristoranti, sapori,<br />esperienze.</small>
+                </span>
+                <span class="mobile-home-card__arrow" aria-hidden="true">›</span>
+              </button>
+              <button class="mobile-home-card" type="button" data-open="beauty">
+                <img src="./img/beauty-stylevana-spf.jpg" alt="" />
+                <span class="mobile-home-card__shade" aria-hidden="true"></span>
+                <span class="mobile-home-card__content">
+                  <strong>Beauty</strong>
+                  <small>Skincare, prodotti,<br />novità.</small>
+                </span>
+                <span class="mobile-home-card__arrow" aria-hidden="true">›</span>
+              </button>
+              <button class="mobile-home-card" type="button" data-open="about">
+                <img src="./img/banner_primapagina.webp" alt="" />
+                <span class="mobile-home-card__shade" aria-hidden="true"></span>
+                <span class="mobile-home-card__content">
+                  <strong>About me</strong>
+                  <small>La mia storia e<br />le mie passioni.</small>
+                </span>
+                <span class="mobile-home-card__arrow" aria-hidden="true">›</span>
+              </button>
+              <button class="mobile-home-card mobile-home-card--contact" type="button" data-open="contact">
+                <img src="./og-image.png" alt="" />
+                <span class="mobile-home-card__shade" aria-hidden="true"></span>
+                <span class="mobile-home-card__content">
+                  <strong>Lavoriamo<br />insieme</strong>
+                  <small>Collaborazioni,<br />UGC, contatti.</small>
+                </span>
+                <span class="mobile-home-card__arrow" aria-hidden="true">›</span>
+              </button>
+            </nav>
           </div>
         </section>
 
@@ -176,6 +215,80 @@
             <img class="phone-mockup__frame" src="./img/iphoneboard.png" alt="" aria-hidden="true" />
             <div class="video-gallery" id="beauty-gallery" tabindex="0" role="region" aria-label="Video beauty: scorri per vederne altri"></div>
           </div>
+          </div>
+        </section>
+
+        <section class="view collection-view profile-view" id="about-view" aria-labelledby="about-title" hidden>
+          <div class="collection-info">
+            <header class="collection-toolbar">
+              <button class="back-button" type="button" data-back aria-label="Torna alla pagina iniziale">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m13.5 5-7 7 7 7M7 12h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <h1 class="collection-title" id="about-title" tabindex="-1">About me</h1>
+            </header>
+
+            <div class="collection-banner collection-banner--about">
+              <img src="./img/banner_primapagina.webp" alt="Martina seduta all'aperto durante un tramonto in campagna" loading="lazy" />
+            </div>
+
+            <nav class="social-links" aria-label="Profili social di Martina">
+              <a href="https://www.tiktok.com/@looksbymarti" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo TikTok di Martina in una nuova scheda">
+                <img class="social-links__icon social-links__icon--tiktok" src="./img/tiktok-logo.ico" alt="" />
+                <span><strong>TikTok</strong><small>@looksbymarti</small></span>
+              </a>
+              <a href="https://www.instagram.com/looksbymarti/" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo Instagram di Martina in una nuova scheda">
+                <img class="social-links__icon social-links__icon--instagram" src="./img/instagram-logo.png" alt="" />
+                <span><strong>Instagram</strong><small>@looksbymarti</small></span>
+              </a>
+            </nav>
+
+            <p class="about-intro">
+              Mi piace fare video sin da quando ero piccola e li considero una sorta di <strong>diario digitale</strong>: un modo per custodire esperienze, scoperte e momenti e poterli rivivere nel tempo.<br /><br />Oggi desidero trasformare questa passione in un percorso professionale, creando contenuti principalmente dedicati a <strong>food</strong>, <strong>beauty</strong> e <strong>skincare</strong>.
+            </p>
+          </div>
+        </section>
+
+        <section class="view collection-view profile-view" id="contact-view" aria-labelledby="contact-title" hidden>
+          <div class="collection-info">
+            <header class="collection-toolbar">
+              <button class="back-button" type="button" data-back aria-label="Torna alla pagina iniziale">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m13.5 5-7 7 7 7M7 12h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <h1 class="collection-title" id="contact-title" tabindex="-1">Lavoriamo insieme</h1>
+            </header>
+
+            <div class="collection-banner collection-banner--contact">
+              <img src="./og-image.png" alt="Illustrazione di Martina" loading="lazy" />
+            </div>
+
+            <nav class="social-links" aria-label="Profili social di Martina">
+              <a href="https://www.tiktok.com/@looksbymarti" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo TikTok di Martina in una nuova scheda">
+                <img class="social-links__icon social-links__icon--tiktok" src="./img/tiktok-logo.ico" alt="" />
+                <span><strong>TikTok</strong><small>@looksbymarti</small></span>
+              </a>
+              <a href="https://www.instagram.com/looksbymarti/" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo Instagram di Martina in una nuova scheda">
+                <img class="social-links__icon social-links__icon--instagram" src="./img/instagram-logo.png" alt="" />
+                <span><strong>Instagram</strong><small>@looksbymarti</small></span>
+              </a>
+            </nav>
+
+            <p class="contact-intro">
+Sei un brand e vorresti <strong>collaborare</strong> con me? Sono disponibile per collaborazioni e progetti dedicati al mondo lifestyle.
+
+Puoi contattarmi direttamente sui miei <strong>social</strong> oppure inviarmi un’email tramite il pulsante qui sotto!            </p>
+
+            <a class="collaboration-email" href="mailto:looksbymarti@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="2.5" y="5" width="19" height="14" rx="3" stroke="currentColor" stroke-width="1.8" />
+                <path d="m3.5 7 8.5 6 8.5-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span><strong>Scrivimi via email</strong><small>looksbymarti@gmail.com</small></span>
+              <span class="collaboration-email__arrow" aria-hidden="true">→</span>
+            </a>
           </div>
         </section>
         </div>
