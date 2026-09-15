@@ -1,13 +1,6 @@
 const raccolte = {
   food: [
     {
-      titolo: "May’s Pasticceria, Pisa (PI)",
-      piattaforma: "TikTok",
-      anteprima: "./img/food-mays.jpg",
-      url: "https://www.tiktok.com/@looksbymarti/video/7669375082606742817",
-      embed: "https://www.tiktok.com/player/v1/7669375082606742817",
-    },
-    {
       titolo: "Azienda Agricola Castelvecchio, Terricciola (PI)",
       piattaforma: "TikTok",
       anteprima: "./img/food-castelvecchio.jpg",
@@ -35,22 +28,15 @@ const raccolte = {
       url: "https://www.tiktok.com/@looksbymarti/video/7659087679056825633",
       embed: "https://www.tiktok.com/player/v1/7659087679056825633",
     },
+    {
+      titolo: "May’s Pasticceria, Pisa (PI)",
+      piattaforma: "TikTok",
+      anteprima: "./img/food-mays.jpg",
+      url: "https://www.tiktok.com/@looksbymarti/video/7669375082606742817",
+      embed: "https://www.tiktok.com/player/v1/7669375082606742817",
+    },
   ],
   beauty: [
-    {
-      titolo: "Stylevana",
-      piattaforma: "Instagram",
-      anteprima: "./img/beauty-stylevana-spf.jpg",
-      url: "https://www.instagram.com/reel/DcgH5r2MMHb/",
-      embed: "https://www.instagram.com/reel/DcgH5r2MMHb/embed/",
-    },
-    {
-      titolo: "Tigotà",
-      piattaforma: "Instagram",
-      anteprima: "./img/beauty-biovene-tigota.jpg",
-      url: "https://www.instagram.com/reel/Dc8-QrZsAUs/",
-      embed: "https://www.instagram.com/reel/Dc8-QrZsAUs/embed/",
-    },
     {
       titolo: "OVS",
       piattaforma: "TikTok",
@@ -64,6 +50,20 @@ const raccolte = {
       anteprima: "./img/beauty-medicube-zero-pore.jpg",
       url: "https://www.tiktok.com/@looksbymarti/video/7671225744617491745",
       embed: "https://www.tiktok.com/player/v1/7671225744617491745",
+    },
+    {
+      titolo: "Stylevana",
+      piattaforma: "Instagram",
+      anteprima: "./img/beauty-stylevana-spf.jpg",
+      url: "https://www.instagram.com/reel/DcgH5r2MMHb/",
+      embed: "https://www.instagram.com/reel/DcgH5r2MMHb/embed/",
+    },
+    {
+      titolo: "Tigotà",
+      piattaforma: "Instagram",
+      anteprima: "./img/beauty-biovene-tigota.jpg",
+      url: "https://www.instagram.com/reel/Dc8-QrZsAUs/",
+      embed: "https://www.instagram.com/reel/Dc8-QrZsAUs/embed/",
     },
     {
       titolo: "dm Italia",
