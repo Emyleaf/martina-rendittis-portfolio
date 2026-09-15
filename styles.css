@@ -194,6 +194,15 @@ a:focus-visible {
   text-align: center;
 }
 
+.home-location-pin {
+  width: 0.9em;
+  height: 0.9em;
+  margin-right: 0.28em;
+  color: #9b2148;
+  fill: currentColor;
+  vertical-align: -0.1em;
+}
+
 .home-content h1 {
   max-width: 360px;
   margin: 6px 0 20px;
