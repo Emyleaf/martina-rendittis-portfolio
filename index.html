@@ -34,6 +34,16 @@
     <script src="./script.js" defer></script>
   </head>
   <body>
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-tiktok" viewBox="0 0 24 24">
+        <path d="M15.2 3c.35 2.05 1.56 3.28 3.8 3.4v3.05a6.48 6.48 0 0 1-3.72-1.08v5.7c0 3.64-2.5 6.1-6.04 6.1-4.3 0-6.87-4.48-4.78-8.12 1.2-2.08 3.44-2.83 5.8-2.3v3.2c-.38-.12-.7-.2-1.08-.18-1.14.04-2.13.84-2.4 1.95-.26 1.07.2 2.18 1.14 2.75 1.52.93 3.58.02 3.75-1.85.04-.42.02-.84.02-1.27V3h3.5Z" fill="currentColor" />
+      </symbol>
+      <symbol id="icon-instagram" viewBox="0 0 24 24">
+        <rect x="3.25" y="3.25" width="17.5" height="17.5" rx="5.25" fill="none" stroke="currentColor" stroke-width="2" />
+        <circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="2" />
+        <circle cx="17.55" cy="6.55" r="1.15" fill="currentColor" />
+      </symbol>
+    </svg>
     <div class="page-backdrop">
       <main class="portfolio" id="portfolio">
         <div class="hero-photo">
@@ -42,6 +52,17 @@
               alt="Martina seduta all'aperto durante un tramonto in campagna"
               fetchpriority="high"
             />
+          <div class="hero-contacts">
+            <nav class="hero-profiles" aria-label="Profili social di Martina">
+              <a href="https://www.tiktok.com/@looksbymarti" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo TikTok di Martina in una nuova scheda">
+                <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-tiktok"></use></svg>
+                <span>@looksbymarti</span>
+              </a>
+              <a href="https://www.instagram.com/looksbymarti/" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo Instagram di Martina in una nuova scheda">
+                <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-instagram"></use></svg>
+                <span>@looksbymarti</span>
+              </a>
+            </nav>
             <button class="contact-chip" type="button" data-copy-email aria-label="Copia l'indirizzo email looksbymarti@gmail.com">
               <svg class="contact-chip__mail" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <rect x="2.5" y="5" width="19" height="14" rx="3" stroke="currentColor" stroke-width="1.8" />
@@ -49,16 +70,7 @@
               </svg>
               <span class="contact-chip__text">looksbymarti@gmail.com</span>
             </button>
-            <nav class="hero-profiles" aria-label="Profili social di Martina">
-              <a href="https://www.instagram.com/looksbymarti/" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo Instagram di Martina in una nuova scheda">
-                <img src="./img/instagram-logo.png" alt="" />
-                <span><strong>Instagram</strong><small>@looksbymarti</small></span>
-              </a>
-              <a href="https://www.tiktok.com/@looksbymarti" target="_blank" rel="noopener noreferrer" aria-label="Apri il profilo TikTok di Martina in una nuova scheda">
-                <img src="./img/tiktok-logo.ico" alt="" />
-                <span><strong>TikTok</strong><small>@looksbymarti</small></span>
-              </a>
-            </nav>
+          </div>
         </div>
 
         <div class="view-container">
@@ -171,12 +183,19 @@
     </div>
 
     <dialog class="video-dialog" id="video-dialog" aria-labelledby="video-dialog-title">
-      <div class="video-dialog__top">
-        <h2 id="video-dialog-title"></h2>
-        <button class="video-dialog__close" type="button" data-close-video aria-label="Chiudi il video">×</button>
+      <div class="video-dialog__shell">
+        <div class="video-dialog__top">
+          <div class="video-dialog__heading">
+            <h2 id="video-dialog-title"></h2>
+          </div>
+          <button class="video-dialog__close" type="button" data-close-video aria-label="Chiudi il video">×</button>
+        </div>
+        <div class="video-dialog__player" id="video-dialog-player"></div>
+        <a class="video-dialog__original" id="video-dialog-original" target="_blank" rel="noopener noreferrer">
+          <span>Apri il post originale</span>
+          <span class="video-dialog__original-arrow" aria-hidden="true">↗</span>
+        </a>
       </div>
-      <div class="video-dialog__player" id="video-dialog-player"></div>
-      <a class="video-dialog__original" id="video-dialog-original" target="_blank" rel="noopener noreferrer">Apri il post originale →</a>
     </dialog>
   </body>
 </html>

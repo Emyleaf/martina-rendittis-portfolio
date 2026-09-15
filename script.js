@@ -89,6 +89,7 @@ const dialog = document.getElementById("video-dialog");
 const dialogTitle = document.getElementById("video-dialog-title");
 const dialogPlayer = document.getElementById("video-dialog-player");
 const dialogOriginal = document.getElementById("video-dialog-original");
+const dialogOriginalLabel = dialogOriginal.querySelector("span");
 const contactChip = document.querySelector("[data-copy-email]");
 const scrollCues = document.querySelectorAll(".scroll-cue");
 const heroPhoto = document.querySelector(".hero-photo");
@@ -111,6 +112,11 @@ const cardObserver = "IntersectionObserver" in window &&
   : null;
 if (cardObserver) document.documentElement.classList.add("motion-ready");
 let activeView = null;
+let pendingView = null;
+let currentVideo = null;
+let lastVideoTrigger = null;
+let restoreVideoFocus = true;
+let videoTransitionId = 0;
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -119,13 +125,63 @@ function element(tag, className, text) {
   return node;
 }
 
-function openVideo(video) {
+function nextPaint() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
+}
+
+function animateVideoFlight(fromRect, toRect, imageSource, duration, closing = false) {
+  if (!Element.prototype.animate || !fromRect?.width || !toRect?.width) {
+    return Promise.resolve();
+  }
+
+  const flight = element("div", "video-flight");
+  const image = element("img");
+  image.src = imageSource;
+  image.alt = "";
+  flight.append(image);
+  dialog.append(flight);
+
+  const frame = (rect, opacity, borderRadius) => ({
+    left: `${rect.left}px`,
+    top: `${rect.top}px`,
+    width: `${rect.width}px`,
+    height: `${rect.height}px`,
+    opacity,
+    borderRadius,
+  });
+  const keyframes = closing
+    ? [frame(fromRect, 1, "20px"), frame(toRect, 0.35, "14px")]
+    : [
+        frame(fromRect, 0.96, "14px"),
+        { ...frame(toRect, 1, "20px"), offset: 0.86 },
+        frame(toRect, 0, "20px"),
+      ];
+  const animation = flight.animate(keyframes, {
+    duration,
+    easing: closing
+      ? "cubic-bezier(0.4, 0, 0.7, 0.2)"
+      : "cubic-bezier(0.2, 0.78, 0.2, 1)",
+    fill: "forwards",
+  });
+
+  return animation.finished.catch(() => {}).finally(() => flight.remove());
+}
+
+async function openVideo(video, trigger) {
+  if (dialog.open) return;
+  const transitionId = ++videoTransitionId;
+  currentVideo = video;
+  lastVideoTrigger = trigger;
+  restoreVideoFocus = true;
   dialogTitle.textContent = video.titolo;
   dialogOriginal.href = video.url;
-  dialogOriginal.textContent = "Apri su " + video.piattaforma + " →";
+  dialogOriginalLabel.textContent = "Apri su " + video.piattaforma;
 
   dialog.showModal();
   document.body.classList.add("dialog-open");
+  if (!reducedMotion.matches) dialog.classList.add("is-morphing");
 
   const frame = element("iframe");
   frame.title = video.titolo + " su " + video.piattaforma;
@@ -134,11 +190,38 @@ function openVideo(video) {
   frame.referrerPolicy = "strict-origin-when-cross-origin";
   dialogPlayer.replaceChildren(frame);
   frame.src = video.embed;
+
+  if (!reducedMotion.matches) {
+    const fromRect = trigger.getBoundingClientRect();
+    await nextPaint();
+    const toRect = dialogPlayer.getBoundingClientRect();
+    await animateVideoFlight(fromRect, toRect, video.anteprima, 520);
+  }
+
+  if (transitionId !== videoTransitionId || !dialog.open) return;
+  dialog.classList.remove("is-morphing");
   dialog.querySelector("[data-close-video]").focus();
 }
 
-function closeVideo() {
-  if (dialog.open) dialog.close();
+async function closeVideo({ immediate = false, restoreFocus = true } = {}) {
+  if (!dialog.open) return;
+  if (dialog.classList.contains("is-closing") && !immediate) return;
+
+  const transitionId = ++videoTransitionId;
+  restoreVideoFocus = restoreFocus;
+  if (immediate || reducedMotion.matches || !currentVideo) {
+    dialog.close();
+    return;
+  }
+
+  dialog.classList.add("is-closing", "is-morphing");
+  const fromRect = dialogPlayer.getBoundingClientRect();
+  const toRect = lastVideoTrigger?.isConnected
+    ? lastVideoTrigger.getBoundingClientRect()
+    : fromRect;
+  await animateVideoFlight(fromRect, toRect, currentVideo.anteprima, 300, true);
+
+  if (transitionId === videoTransitionId && dialog.open) dialog.close();
 }
 
 function videoCard(video) {
@@ -156,7 +239,7 @@ function videoCard(video) {
     element("span", "video-banner__label", video.titolo),
     element("span", "video-banner__play"),
   );
-  card.addEventListener("click", () => openVideo(video));
+  card.addEventListener("click", () => openVideo(video, card));
   return card;
 }
 
@@ -201,12 +284,30 @@ function fitCollectionSummary() {
 
 }
 
-function showView(view, focusHeading = false) {
-  if (activeView === view) return;
-  closeVideo();
+function startViewEntry(section) {
+  if (reducedMotion.matches) return;
+  section.classList.add("is-entering");
+  const finish = () => section.classList.remove("is-entering");
+  section.addEventListener("animationend", finish, { once: true });
+  window.setTimeout(finish, 420);
+}
+
+async function showView(view, focusHeading = false) {
+  if (activeView === view || pendingView === view) return;
+  pendingView = view;
+  const previousSection = views[activeView];
+  closeVideo({ immediate: true, restoreFocus: false });
   cardObserver?.disconnect();
 
+  if (previousSection && !reducedMotion.matches) {
+    previousSection.classList.add("is-leaving");
+    await new Promise((resolve) => window.setTimeout(resolve, 150));
+    previousSection.classList.remove("is-leaving");
+    if (pendingView !== view) return;
+  }
+
   for (const [name, section] of Object.entries(views)) {
+    section.classList.remove("is-entering", "is-leaving");
     section.hidden = name !== view;
   }
   for (const [name, gallery] of Object.entries(galleries)) {
@@ -215,12 +316,14 @@ function showView(view, focusHeading = false) {
   if (view !== "home") populateGallery(view);
 
   activeView = view;
+  pendingView = null;
   portfolio.classList.toggle("is-collection", view !== "home");
   document.title = view === "home"
     ? "Martina"
     : (view === "food" ? "Food" : "Beauty") + " - Martina";
   window.scrollTo(0, 0);
   viewContainer.scrollTop = 0;
+  startViewEntry(views[view]);
   requestAnimationFrame(() => {
     fitCollectionSummary();
     updateScrollCues();
@@ -314,10 +417,21 @@ document.querySelectorAll("[data-scroll-to]").forEach((button) => {
     }
   });
 });
-document.querySelector("[data-close-video]").addEventListener("click", closeVideo);
+document.querySelector("[data-close-video]").addEventListener("click", () => closeVideo());
+dialog.addEventListener("cancel", (event) => {
+  event.preventDefault();
+  closeVideo();
+});
 dialog.addEventListener("close", () => {
   dialogPlayer.replaceChildren();
   document.body.classList.remove("dialog-open");
+  dialog.classList.remove("is-closing", "is-morphing");
+  dialog.querySelectorAll(".video-flight").forEach((flight) => flight.remove());
+  currentVideo = null;
+  if (restoreVideoFocus && lastVideoTrigger?.isConnected) {
+    lastVideoTrigger.focus({ preventScroll: true });
+  }
+  lastVideoTrigger = null;
 });
 dialog.addEventListener("click", (event) => {
   if (event.target === dialog) closeVideo();

@@ -513,41 +513,66 @@ a:focus-visible {
 .video-dialog {
   position: fixed;
   inset: 0;
+  display: none;
   width: 100vw;
   height: 100dvh;
   max-width: none;
   max-height: none;
   margin: 0;
-  padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+  padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom));
   border: 0;
-  background: #21131a;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(160, 64, 100, 0.3), transparent 34%),
+    radial-gradient(circle at 88% 94%, rgba(118, 33, 63, 0.26), transparent 38%),
+    #190f14;
   color: white;
 }
 
 .video-dialog[open] {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  place-items: center;
 }
 
 .video-dialog::backdrop {
-  background: rgba(18, 11, 15, 0.9);
+  background: rgba(18, 11, 15, 0.88);
+  backdrop-filter: blur(7px);
+}
+
+.video-dialog__shell {
+  position: relative;
+  display: flex;
+  width: min(100%, 450px);
+  max-height: 100%;
+  flex-direction: column;
+  padding: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.065);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.44);
+  backdrop-filter: blur(18px);
 }
 
 .video-dialog__top {
   display: flex;
-  width: min(100%, 430px);
-  min-height: 54px;
+  min-height: 62px;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  padding: 3px 3px 10px 8px;
+}
+
+.video-dialog__heading {
+  min-width: 0;
 }
 
 .video-dialog__top h2 {
   margin: 0;
   overflow: hidden;
-  font-size: 0.875rem;
-  font-weight: 750;
+  font-size: 0.9375rem;
+  font-weight: 780;
+  letter-spacing: -0.02em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -558,24 +583,29 @@ a:focus-visible {
   height: 42px;
   flex: 0 0 42px;
   place-items: center;
-  border: 1px solid #785c69;
-  border-radius: 12px;
-  background: #3d2933;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
   color: white;
   cursor: pointer;
   font-size: 1.75rem;
   line-height: 1;
+  transition: background 160ms ease, transform 160ms ease;
 }
 
 .video-dialog__player {
   width: auto;
-  height: min(calc(100dvh - 132px), 177.78vw);
+  height: min(calc(100dvh - 174px), 170vw);
   aspect-ratio: 9 / 16;
   max-width: 100%;
-  margin: auto 0;
+  max-height: 720px;
+  margin: 0 auto;
   overflow: hidden;
-  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 20px;
   background: #000;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.4);
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .video-dialog__player iframe {
@@ -586,28 +616,46 @@ a:focus-visible {
 }
 
 .video-dialog__original {
-  display: block;
-  width: min(100%, 430px);
-  min-height: 37px;
-  color: #f6d6e0;
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 37px;
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.075);
+  color: #f9e9ef;
+  font-size: 0.8125rem;
+  font-weight: 750;
   text-align: center;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  transition: background 160ms ease, transform 160ms ease;
 }
 
-@keyframes soft-rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
+.video-dialog__original-arrow {
+  font-size: 1rem;
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.video-dialog.is-morphing .video-dialog__player {
+  opacity: 0;
+  transform: scale(0.985);
+}
+
+.video-flight {
+  position: fixed;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42);
+}
+
+.video-flight img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 52%;
 }
 
 @keyframes photo-arrive {
@@ -622,29 +670,37 @@ a:focus-visible {
   }
 }
 
-@keyframes dialog-arrive {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes view-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.home-view:not([hidden]) .home-name,
-.home-view:not([hidden]) .home-content h1,
-.home-view:not([hidden]) .home-intro,
-.home-view:not([hidden]) .category-actions,
-.collection-view:not([hidden]) .collection-toolbar,
-.collection-view:not([hidden]) .collection-banner,
-.collection-view:not([hidden]) .social-links,
-.collection-view:not([hidden]) .food-intro,
-.collection-view:not([hidden]) .beauty-intro {
-  animation: soft-rise 480ms cubic-bezier(0.2, 0.75, 0.25, 1) backwards;
+@keyframes view-leave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
 }
 
-.home-view:not([hidden]) .home-name { animation-delay: 70ms; }
-.home-view:not([hidden]) .home-content h1 { animation-delay: 130ms; }
-.home-view:not([hidden]) .home-intro { animation-delay: 190ms; }
-.home-view:not([hidden]) .category-actions { animation-delay: 250ms; }
-.collection-view:not([hidden]) .collection-banner { animation-delay: 60ms; }
-.collection-view:not([hidden]) .social-links { animation-delay: 130ms; }
+.view.is-entering {
+  animation: view-arrive 340ms cubic-bezier(0.22, 0.75, 0.25, 1) both;
+}
+
+.view.is-leaving {
+  animation: view-leave 140ms ease-in both;
+}
 
 .category-button__arrow {
   transition: transform 180ms ease;
@@ -677,8 +733,54 @@ a:focus-visible {
   transform: scale(0.98);
 }
 
-.video-dialog[open] {
-  animation: dialog-arrive 220ms ease-out;
+.video-dialog[open]::backdrop {
+  animation: dialog-backdrop-in 360ms ease-out both;
+}
+
+.video-dialog[open] .video-dialog__shell {
+  animation: dialog-shell-in 380ms cubic-bezier(0.22, 0.78, 0.22, 1) both;
+}
+
+.video-dialog.is-closing::backdrop {
+  animation: dialog-backdrop-out 300ms ease-in both;
+}
+
+.video-dialog.is-closing .video-dialog__shell {
+  animation: dialog-shell-out 300ms ease-in both;
+}
+
+@keyframes dialog-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dialog-backdrop-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes dialog-shell-in {
+  from {
+    opacity: 0;
+    transform: scale(0.965) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes dialog-shell-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
 }
 
 @media (min-width: 700px) {
@@ -970,7 +1072,6 @@ a:focus-visible {
 
   .collection-media {
     height: 100%;
-    animation: soft-rise 500ms cubic-bezier(0.2, 0.75, 0.25, 1) backwards;
   }
 
   .video-gallery {
@@ -1021,6 +1122,19 @@ a:focus-visible {
   }
 
   .hero-profiles a:hover { transform: translateY(-2px); }
+
+  .video-dialog__close:hover,
+  .video-dialog__original:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .video-dialog__close:hover {
+    transform: rotate(5deg);
+  }
+
+  .video-dialog__original:hover {
+    transform: translateY(-1px);
+  }
 }
 
 @media (max-width: 699px) {
@@ -1165,18 +1279,18 @@ a:focus-visible {
   }
 
   .portfolio:not(.is-collection) .hero-photo > img,
-  .home-view:not([hidden]) .home-name,
-  .home-view:not([hidden]) .home-content h1,
-  .home-view:not([hidden]) .home-intro,
-  .home-view:not([hidden]) .category-actions,
-  .collection-view:not([hidden]) .collection-toolbar,
-  .collection-view:not([hidden]) .collection-banner,
-  .collection-view:not([hidden]) .social-links,
-  .collection-view:not([hidden]) .food-intro,
-  .collection-view:not([hidden]) .beauty-intro,
+  .view.is-entering,
+  .view.is-leaving,
   .collection-media,
-  .video-dialog[open] {
+  .video-dialog[open]::backdrop,
+  .video-dialog[open] .video-dialog__shell,
+  .video-dialog.is-closing::backdrop,
+  .video-dialog.is-closing .video-dialog__shell {
     animation: none;
+  }
+
+  .video-dialog__player {
+    transition: none;
   }
 
   .motion-ready .video-banner {
@@ -1432,8 +1546,7 @@ a:focus-visible {
     width: 54px;
   }
 
-  .portfolio.is-collection > .hero-photo .hero-profiles,
-  .portfolio.is-collection > .hero-photo .contact-chip {
+  .portfolio.is-collection > .hero-photo .hero-contacts {
     display: none;
   }
 
@@ -1601,5 +1714,210 @@ a:focus-visible {
 
   .scroll-cue__animation {
     transform: rotate(-90deg);
+  }
+}
+
+/* Neutral contact strip inspired by the supplied visual reference. */
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.hero-contacts {
+  position: absolute;
+  z-index: 4;
+  right: clamp(14px, 3vw, 40px);
+  bottom: 10%;
+  display: flex;
+  max-width: calc(100% - 28px);
+  align-items: center;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 15px;
+  background: rgba(255, 252, 250, 0.92);
+  box-shadow: 0 7px 22px rgba(67, 23, 40, 0.09);
+  backdrop-filter: blur(10px);
+}
+
+.hero-profiles {
+  position: static;
+  display: flex;
+  width: auto;
+  min-width: 0;
+  grid-template-columns: none;
+  gap: 0;
+}
+
+.hero-profiles a,
+.contact-chip {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  display: flex;
+  width: auto;
+  min-width: 0;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--wine);
+  text-decoration: none;
+  backdrop-filter: none;
+}
+
+.hero-profiles a {
+  height: 40px;
+  transition: color 160ms ease, background 160ms ease;
+}
+
+.hero-profiles a:last-child {
+  order: initial;
+}
+
+.hero-profiles a + a::before,
+.contact-chip::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 1px;
+  height: 22px;
+  background: rgba(118, 33, 63, 0.18);
+  content: "";
+  transform: translateY(-50%);
+}
+
+.contact-icon,
+.contact-chip__mail {
+  display: block;
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+}
+
+.hero-profiles a span,
+.contact-chip__text {
+  overflow: hidden;
+  color: var(--wine-deep);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-profiles a:hover,
+  .contact-chip:hover {
+    background: rgba(118, 33, 63, 0.055);
+    box-shadow: none;
+    color: var(--wine-deep);
+  }
+}
+
+@media (max-width: 699px) {
+  .hero-contacts {
+    right: 14px;
+    bottom: 14px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .hero-profiles {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    gap: 6px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .hero-profiles a {
+    width: 152px;
+    height: 40px;
+    min-height: 40px;
+    justify-content: flex-start;
+    padding: 0 13px;
+    border: 1px solid rgba(118, 33, 63, 0.42);
+    border-radius: 14px;
+    background: rgba(255, 252, 250, 0.94);
+    box-shadow: 0 5px 16px rgba(67, 23, 40, 0.1);
+    backdrop-filter: blur(9px);
+  }
+
+  .hero-profiles a:last-child {
+    order: initial;
+  }
+
+  .hero-profiles a span {
+    display: block;
+    font-size: 0.75rem;
+  }
+
+  .hero-profiles a + a::before {
+    display: none;
+  }
+
+  .contact-icon {
+    width: 20px;
+    height: 20px;
+    flex-basis: 20px;
+  }
+
+  .contact-chip {
+    width: 218px;
+    min-height: 40px;
+    max-width: 100%;
+    justify-content: flex-start;
+    padding: 0 13px;
+    border: 1px solid rgba(118, 33, 63, 0.42);
+    border-radius: 14px;
+    background: rgba(255, 252, 250, 0.94);
+    box-shadow: 0 5px 16px rgba(67, 23, 40, 0.1);
+    backdrop-filter: blur(9px);
+  }
+
+  .contact-chip::before {
+    display: none;
+  }
+
+  .contact-chip__text {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 365px) {
+  .hero-profiles a {
+    width: 144px;
+  }
+
+  .contact-chip {
+    width: 200px;
+  }
+
+  .hero-profiles a span,
+  .contact-chip__text {
+    font-size: 0.6875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-profiles a {
+    transition: none;
   }
 }
