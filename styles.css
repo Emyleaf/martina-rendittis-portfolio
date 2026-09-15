@@ -2227,17 +2227,23 @@ a:focus-visible {
     z-index: 2;
     right: 11px;
     bottom: 12px;
-    display: grid;
-    width: 31px;
-    height: 31px;
-    place-items: center;
+    display: flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     background: rgba(255, 250, 248, 0.92);
-    color: var(--wine-deep);
-    font-family: Arial, sans-serif;
-    font-size: 1.75rem;
-    font-weight: 300;
-    line-height: 1;
+  }
+
+  .mobile-home-card__arrow::after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-top: 2.4px solid #68152d;
+    border-right: 2.4px solid #68152d;
+    transform: rotate(45deg);
+    margin-left: -3px;
   }
 
   .mobile-home-card:active {
@@ -2323,8 +2329,8 @@ a:focus-visible {
   .mobile-home-card__arrow {
     right: 8px;
     bottom: 9px;
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
   }
 
   .collaboration-email {
