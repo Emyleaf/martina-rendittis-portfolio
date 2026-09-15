@@ -236,6 +236,14 @@ a:focus-visible {
   line-height: 1.58;
 }
 
+.about-intro p {
+  margin: 0;
+}
+
+.about-intro p + p {
+  margin-top: 1.2em;
+}
+
 .category-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

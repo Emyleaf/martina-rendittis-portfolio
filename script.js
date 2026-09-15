@@ -321,7 +321,7 @@ async function showView(view, focusHeading = false) {
   pendingView = null;
   portfolio.classList.toggle("is-collection", view !== "home");
   const viewTitles = {
-    home: "Martina",
+    home: "Portfolio - Martina",
     food: "Food - Martina",
     beauty: "Beauty - Martina",
     about: "About me - Martina",
