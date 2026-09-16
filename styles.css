@@ -441,6 +441,21 @@ a:focus-visible {
   padding: 18px 25px 0;
 }
 
+.collaborations-title {
+  margin: 28px 25px 0;
+  color: var(--ink);
+  font-size: clamp(1.5625rem, 6.7vw, 1.9375rem);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+  text-align: center;
+  padding-left: 1rem;
+}
+
+.collaborations-media .video-gallery {
+  padding-top: 32px;
+}
+
 .scroll-cue {
   position: fixed;
   z-index: 3;
@@ -2283,8 +2298,30 @@ a:focus-visible {
     padding-bottom: 30px;
   }
 
+  #contact-view .collection-info {
+    padding-bottom: 0;
+  }
+
+  #contact-view .collection-banner--contact {
+    display: none;
+  }
+
+  #contact-view .contact-intro {
+    margin-top: 0;
+  }
+
+  #contact-view .social-links {
+    margin-top: 26px;
+  }
+
+  #contact-view .collaborations-title {
+    margin-top: 27px;
+  }
+
   .collection-banner--about > img {
     object-position: 50% 58%;
+    scale: 140%;
+    padding-right: 25px;
   }
 
   .collection-banner--contact {
@@ -2600,6 +2637,15 @@ img[src="./img/food-castelvecchio.jpg"] {
 
 /* Email call-to-action outside the mobile layout. */
 @media (min-width: 700px) {
+  .collaborations-title {
+    margin: 0 0 24px;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+  }
+
+  .collaborations-media .video-gallery {
+    padding-top: 0;
+  }
+
   .collaboration-email {
     position: relative;
     z-index: 2;
@@ -2835,5 +2881,119 @@ img[src="./img/food-castelvecchio.jpg"] {
 @media (min-width: 700px) and (prefers-reduced-motion: reduce) {
   .collaboration-email {
     transition: none;
+  }
+}
+
+/* Desktop contact page: keep contacts and collaborations in one viewport. */
+@media (min-width: 1100px) {
+  #contact-view.profile-view {
+    display: grid;
+    height: 100%;
+    min-height: 100%;
+    grid-template-columns: minmax(0, 1.1fr) minmax(185px, 0.9fr);
+    align-items: center;
+    gap: clamp(24px, 3vw, 54px);
+    padding: clamp(30px, 3vw, 52px);
+    overflow: hidden;
+  }
+
+  #contact-view .collection-info {
+    display: grid;
+    width: 100%;
+    height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(4, auto);
+    align-content: center;
+    row-gap: clamp(22px, 3.5vh, 30px);
+  }
+
+  #contact-view .collection-toolbar {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0;
+  }
+
+  #contact-view .back-button {
+    width: clamp(40px, 2.6vw, 46px);
+    height: clamp(40px, 2.6vw, 46px);
+    flex-basis: clamp(40px, 2.6vw, 46px);
+  }
+
+  #contact-view .collection-title {
+    font-size: clamp(1.75rem, 2.2vw, 2.375rem);
+  }
+
+  #contact-view .collection-banner--contact {
+    display: none;
+  }
+
+  #contact-view .contact-intro {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: auto;
+    margin: 0;
+    font-size: clamp(1rem, 1.25vw, 1.25rem);
+    line-height: 1.55;
+  }
+
+  #contact-view .social-links {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: auto;
+    margin: 0;
+  }
+
+  #contact-view .social-links a {
+    min-height: clamp(72px, 10vh, 84px);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  #contact-view .social-links__icon {
+    width: clamp(40px, 2.6vw, 46px);
+    height: clamp(40px, 2.6vw, 46px);
+    flex-basis: clamp(40px, 2.6vw, 46px);
+  }
+
+  #contact-view .social-links a strong {
+    font-size: clamp(0.8125rem, 1vw, 1rem);
+  }
+
+  #contact-view .social-links a small {
+    font-size: clamp(0.625rem, 0.75vw, 0.75rem);
+  }
+
+  #contact-view .collaboration-email {
+    grid-column: 1;
+    grid-row: 4;
+    align-self: auto;
+    min-height: clamp(76px, 10.5vh, 88px);
+  }
+
+  #contact-view .collaboration-email strong {
+    font-size: clamp(0.875rem, 1vw, 1rem);
+  }
+
+  #contact-view .collaborations-media {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 8px 0;
+  }
+
+  #contact-view .collaborations-title {
+    flex: 0 0 auto;
+    margin: 0 0 clamp(8px, 1.2vh, 14px);
+    font-size: clamp(1.45rem, 2vw, 2rem);
+  }
+
+  #contact-view .phone-mockup {
+    width: min(112%, 338px, calc((100svh - 130px) * 0.563));
+    margin: 0 auto;
   }
 }

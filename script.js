@@ -75,6 +75,10 @@ const raccolte = {
   ],
 };
 
+raccolte.contact = raccolte.beauty.filter((video) =>
+  ["Medicube Zero Pore", "Stylevana"].includes(video.titolo),
+);
+
 const email = "looksbymarti@gmail.com";
 const views = {
   home: document.getElementById("home-view"),
@@ -86,6 +90,7 @@ const views = {
 const galleries = {
   food: document.getElementById("food-gallery"),
   beauty: document.getElementById("beauty-gallery"),
+  contact: document.getElementById("contact-gallery"),
 };
 const dialog = document.getElementById("video-dialog");
 const dialogTitle = document.getElementById("video-dialog-title");
